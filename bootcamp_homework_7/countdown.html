@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Geri Sayım Aracı</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Geri Sayım Aracı</h1>
+
+
+        <input type="number" id="timeInput" placeholder="Geri sayım süresini girin." min="1">
+        <br>
+        <button onclick="startCountdown()" id="start">Başlat</button>
+        <button onclick="resetCountdown()" id="reset">Sıfırla</button>
+
+        <p id="countdown">Süre girilmedi.</p>
+    </div>
+
+    <script>
+        let countdown;
+        let stayTime = 0;
+
+        function startCountdown() {
+            const input = document.getElementById("timeInput").value;
+            stayTime = parseInt(input);
+
+            if (isNaN(stayTime) || stayTime <= 0) {
+                document.getElementById("countdown").innerText = "Geçerli bir süre girin!";
+                return;
+            }
+
+            clearInterval(countdown);
+            updateCountdownDisplay();
+
+            countdown = setInterval(() => {
+                stayTime--;
+                updateCountdownDisplay();
+
+                if (stayTime <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById("countdown").innerText = "Süre doldu!";
+                }
+            }, 1000);
+        }
+
+        function resetCountdown() {
+            clearInterval(countdown);
+            stayTime = 0;
+            document.getElementById("countdown").innerText = "Sıfırlandı.";
+            document.getElementById("timeInput").value = "";
+        }
+
+        function updateCountdownDisplay() {
+            document.getElementById("countdown").innerText = `${stayTime} saniye kaldı`;
+        }
+    </script>
+
+</body>
+
+</html>
